@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Percabangan Ternary</title>
+</head>
+<body>
+<script>
+    var username = prompt("Username:");
+    var password = prompt("Password:");
+
+    // Menggunakan ternary operator untuk pengecekan
+    var message = (username === "mahasiswa" && password === "kopi")
+        ? "<h2>Selamat datang</h2>"
+        : (username === "mahasiswa" ? "<p>Password salah, coba lagi!</p>" : "<p>Anda tidak terdaftar!</p>");
+
+    document.write(message);
+</script>
+</body>
+</html>
