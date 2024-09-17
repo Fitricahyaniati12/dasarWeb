@@ -9,6 +9,8 @@ $hasilBagi = $a / $b;
 $sisaBagi = $a % $b;
 $pangkat = $a ** $b;
 
+echo "<h2>Perhitungan Aritmatika</h2>";
+
 echo "Hasil Tambah: $hasilTambah<br>";
 echo "Hasil Kurang: $hasilKurang<br>";
 echo "Hasil Kali: $hasilKali<br>";
@@ -44,4 +46,18 @@ echo "<p>Hasil AND (a && b): " . ($hasilAnd ? 'true' : 'false') . "</p>";
 echo "<p>Hasil OR (a || b): " . ($hasilOr ? 'true' : 'false') . "</p>";
 echo "<p>Hasil NOT a (!a): " . ($hasilNotA ? 'true' : 'false') . "</p>";
 echo "<p>Hasil NOT b (!b): " . ($hasilNotB ? 'true' : 'false') . "</p>";
+
+
+$hasilTambahCompound = $a += $b;
+$hasilKurangCompound = $a -= $b;
+$hasilKaliCompound = $a *= $b;
+$hasilBagiCompound = $a /= $b;
+$hasilSisaBagiCompound = $a %= $b;
+
+echo "<h2>Hasil Operasi Penugasan</h2>";
+echo "<p>Hasil a += b: $hasilTambahCompound<br>";
+echo "<p>Hasil a -= b: $hasilKurangCompound<br>";
+echo "<p>Hasil a *= b: $hasilKaliCompound<br>";
+echo "<p>Hasil a /= b: $hasilBagiCompound<br>";
+echo "<p>Hasil a %= b: $hasilSisaBagiCompound<br>";
 ?>
