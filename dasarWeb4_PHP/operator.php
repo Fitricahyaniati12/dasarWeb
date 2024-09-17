@@ -60,4 +60,12 @@ echo "<p>Hasil a -= b: $hasilKurangCompound<br>";
 echo "<p>Hasil a *= b: $hasilKaliCompound<br>";
 echo "<p>Hasil a /= b: $hasilBagiCompound<br>";
 echo "<p>Hasil a %= b: $hasilSisaBagiCompound<br>";
+
+
+$hasilIdentik = $a === $b;
+$hasilTidakIdentik = $a !== $b;
+
+echo "<h2>Hasil Perbandingan Identitas</h2>";
+echo "<p>Hasil Identik (a === b): " . ($hasilIdentik ? 'true' : 'false') . "</p>";
+echo "<p>Hasil Tidak Identik (a !== b): " . ($hasilTidakIdentik ? 'true' : 'false') . "</p>";
 ?>
