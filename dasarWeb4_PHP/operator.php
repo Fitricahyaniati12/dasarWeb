@@ -33,4 +33,15 @@ echo "<p>Hasil Lebih Kecil (a < b): " . ($hasilLebihKecil ? 'true' : 'false') . 
 echo "<p>Hasil Lebih Besar (a > b): " . ($hasilLebihBesar ? 'true' : 'false') . "</p>";
 echo "<p>Hasil Lebih Kecil Sama (a <= b): " . ($hasilLebihKecilSama ? 'true' : 'false') . "</p>";
 echo "<p>Hasil Lebih Besar Sama (a >= b): " . ($hasilLebihBesarSama ? 'true' : 'false') . "</p>";
+
+$hasilAnd = $a && $b;
+$hasilOr = $a || $b;
+$hasilNotA = !$a;
+$hasilNotB = !$b;
+
+echo "<h2>Hasil Operasi Logika</h2>";
+echo "<p>Hasil AND (a && b): " . ($hasilAnd ? 'true' : 'false') . "</p>";
+echo "<p>Hasil OR (a || b): " . ($hasilOr ? 'true' : 'false') . "</p>";
+echo "<p>Hasil NOT a (!a): " . ($hasilNotA ? 'true' : 'false') . "</p>";
+echo "<p>Hasil NOT b (!b): " . ($hasilNotB ? 'true' : 'false') . "</p>";
 ?>
