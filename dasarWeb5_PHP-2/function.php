@@ -1,18 +1,19 @@
 <?php
-function perkenalan($nama, $salam) {
-    echo $salam.",";
-    echo "Perkenalkan, nama saya ".$nama."<br/>"; 
-    echo "Senang berkenalan dengan Anda!<br/>";
+// Membuat fungsi
+function perkenalan($nama, $salam = "Assalamualaikum") {
+    echo $salam . ", ";
+    echo "Perkenalkan, nama saya " . $nama . "<br/>"; 
+    echo "Senang berkenalan dengan Anda<br/>";
 }
 
-//memanggil fungsi yang sudah dibuat
-perkenalan("Cahya", "Hallo");
+// Memanggil fungsi dengan argumen lengkap
+perkenalan("Fitri", "Hallo");
 
 echo "<hr>";
 
-$saya = "Cahya";
-$ucapSalam = "Selamat Pagi";
+$saya = "chya";
+$ucapanSalam = "Selamat pagi";
 
-//memanggil lagi
-perkenalan($saya,$ucapSalam);
+// Memanggil fungsi tanpa mengisi parameter salam
+perkenalan($saya);
 ?>
