@@ -1,7 +1,12 @@
 <?php
-function tampilkanHaloDunia() {
-    echo "Halo dunia! <br>";
-    tampilkanHaloDunia(); // Recursive call without termination condition
+function tampilkanAngka(int $jumlah, int $sindeks = 1) {
+    echo "Perulangan ke-{$sindeks} <br>";
+    // Call itself while $sindeks <= $jumlah
+    if ($sindeks < $jumlah) {
+        tampilkanAngka($jumlah, $sindeks + 1);
+    }
 }
-tampilkanHaloDunia();
+
+// Call the function to display numbers from 1 to 25
+tampilkanAngka(25);
 ?>
