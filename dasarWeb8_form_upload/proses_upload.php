@@ -1,8 +1,5 @@
 <?php
-// Lokasi penyimpanan file yang diunggah
-$targetDirectory = "documents/";
-
-// Periksa apakah direktori penyimpanan ada, jika tidak maka buat
+$targetDirectory = "uploads/";
 if (!file_exists($targetDirectory)) {
     mkdir($targetDirectory, 0777, true);
 }
@@ -14,13 +11,23 @@ if (!empty($_FILES['files']['name'][0])) {
     // Loop melalui semua file yang diunggah
     for ($i = 0; $i < $totalFiles; $i++) {
         $fileName = $_FILES['files']['name'][$i]; // Nama file
+        $fileTmpName = $_FILES['files']['tmp_name'][$i];
         $targetFile = $targetDirectory . basename($fileName); // Jalur file target
+        $fileType = strtolower(pathinfo($targetFile, PATHINFO_EXTENSION));
 
-        // Pindahkan file yang diunggah ke direktori penyimpanan
-        if (move_uploaded_file($_FILES['files']['tmp_name'][$i], $targetFile)) {
-            echo "File $fileName berhasil diunggah.<br>";
+        $allowedExtensions = array("jpg", "jpeg", "png", "gif");
+
+        if (in_array($fileType, $allowedExtensions)) {
+         
+            if (move_uploaded_file($fileTmpName, $targetFile)) {
+                echo "File $fileName berhasil diunggah.<br>";
+               
+                echo "<img src='$targetFile' width='200' alt='Thumbnail'><br>";
+            } else {
+                echo "Gagal mengunggah file $fileName.<br>";
+            }
         } else {
-            echo "Gagal mengunggah file $fileName.<br>";
+            echo "Format file $fileName tidak valid (hanya JPG, JPEG, PNG, GIF).<br>";
         }
     }
 } else {
