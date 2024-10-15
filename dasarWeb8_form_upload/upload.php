@@ -1,23 +1,30 @@
 <?php
-if (isset($_POST["submit"])) {
-    $targetdir = "uploads/"; // Direktori tujuan untuk menyimpan file
-    $targetfile = $targetdir . basename($_FILES["myfile"]["name"]);
-    $fileType = strtolower(pathinfo($targetfile, PATHINFO_EXTENSION));
+if (isset($_FILES['file'])) {
+    $errors = array();
+    $allowed_extensions = array("jpg", "jpeg", "gif", "png", "pdf", "docx");
+    $file_name = $_FILES['file']['name'];
+    $file_size = $_FILES['file']['size'];
+    $file_tmp = $_FILES['file']['tmp_name'];
+    $file_ext = strtolower(pathinfo($file_name, PATHINFO_EXTENSION));
 
-    $allowedExtensions = array("txt", "pdf", "doc", "docx");
+    if (in_array($file_ext, $allowed_extensions) === false) {
+        $errors[] = "Ekstensi file tidak diizinkan. Hanya file JPG, JPEG, GIF, PNG, PDF, dan DOCX yang diizinkan.";
+    }
 
-    $maxsize = 3 * 1024 * 1024;
+    if ($file_size > 2097152) {
+        $errors[] = "Ukuran file tidak boleh lebih dari 2 MB.";
+    }
 
-    // Periksa apakah file valid (ekstensi dan ukuran)
-    if (in_array($fileType, $allowedExtensions) && $_FILES["myfile"]["size"] <= $maxsize) {
-        // Coba memindahkan file ke folder target
-        if (move_uploaded_file($_FILES["myfile"]["tmp_name"], $targetfile)) {
-            echo "File berhasil diunggah";
+    if (empty($errors)) {
+        if (move_uploaded_file($file_tmp, "uploads/" . $file_name)) {
+            echo "File berhasil diunggah: " . $file_name;
         } else {
-            echo "Gagal mengunggah file.";
+            echo "Terjadi kesalahan saat mengunggah file.";
         }
     } else {
-        echo "File tidak valid atau melebihi ukuran maksimum yang diizinkan";
+        echo implode("<br>", $errors);
     }
+} else {
+    echo "Tidak ada file yang diunggah.";
 }
 ?>
