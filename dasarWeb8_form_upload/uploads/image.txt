@@ -1,0 +1,17 @@
+
+public class Pasien {
+private String noRekam Medis;
+private String nama;
+public String getNoRekam Medis () {
+}
+return noRekam Medis;
+public void setNoRekamMedis (String noRekam Medis) { this.noRekamMedis = noRekamMedis;
+}
+public String getNama () {
+return nama;
+}
+public void setNama (String nama) {
+}
+}
+this.nama
+nama;
