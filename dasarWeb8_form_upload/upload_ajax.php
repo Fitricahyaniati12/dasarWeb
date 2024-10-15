@@ -1,30 +1,35 @@
 <?php
-if (isset($_FILES['file'])) {
+if (isset($_FILES['files'])) {
     $errors = array();
-    $file_name = $_FILES['file']['name'];
-    $file_size = $_FILES['file']['size'];
-    $file_tmp = $_FILES['file']['tmp_name'];
-    $file_type = $_FILES['file']['type'];
+    $allowed_extensions = array("jpg", "jpeg", "gif", "png");
 
-    // Mendapatkan ekstensi file
-    $file_ext = strtolower(pathinfo($file_name, PATHINFO_EXTENSION));
+    foreach ($_FILES['files']['tmp_name'] as $key => $tmp_name) {
+        $file_name = $_FILES['files']['name'][$key];
+        $file_size = $_FILES['files']['size'][$key];
+        $file_tmp = $_FILES['files']['tmp_name'][$key];
+        $file_type = $_FILES['files']['type'][$key];
+        $file_ext = strtolower(pathinfo($file_name, PATHINFO_EXTENSION));
 
-    $extensions = array("pdf", "doc", "docx", "txt");
+        // Cek apakah ekstensi file diizinkan (JPG, JPEG, GIF, PNG)
+        if (in_array($file_ext, $allowed_extensions) === false) {
+            $errors[] = "Ekstensi file $file_name tidak diizinkan. Hanya file JPG, JPEG, GIF, PNG yang diizinkan.";
+        }
 
-    if (!in_array($file_ext, $extensions)) {
-        $errors[] = "Ekstensi file yang diizinkan adalah PDF, DOC, DOCX, atau TXT.";
-    }
+        // Cek apakah ukuran file melebihi 2 MB
+        if ($file_size > 2097152) {
+            $errors[] = "Ukuran file $file_name tidak boleh lebih dari 2 MB.";
+        }
 
-    //  (maks 2 MB)
-    if ($file_size > 2097152) {
-        $errors[] = "Ukuran file tidak boleh lebih dari 2 MB.";
+        // Unggah jika tidak ada kesalahan
+        if (empty($errors)) {
+            move_uploaded_file($file_tmp, "uploads/" . $file_name);
+        }
     }
 
     if (empty($errors)) {
-        move_uploaded_file($file_tmp, "documents/" . $file_name);
-        echo "File berhasil diunggah.";
+        echo "Semua file berhasil diunggah.";
     } else {
-        echo implode(" ", $errors);
+        echo "Beberapa file gagal diunggah: " . implode(", ", $errors);
     }
 }
 ?>
