@@ -1,34 +1,48 @@
 <?php
-include('koneksi.php'); // Include database connection
+include('koneksi.php'); // Pastikan koneksi database berhasil
 
-$aksi = $_GET['aksi'] ?? '';
+// Pastikan koneksi berhasil
+if (!$koneksi) {
+    die("Koneksi gagal: " . mysqli_connect_error());
+}
 
-if ($aksi == 'ubah') {
-    if (isset($_POST['id'])) {
-        // Sanitize the ID and other inputs
-        $id = intval($_POST['id']);
-        $nama = mysqli_real_escape_string($koneksi, $_POST['nama']);
-        $jenis_kelamin = mysqli_real_escape_string($koneksi, $_POST['jenis_kelamin']);
-        $alamat = mysqli_real_escape_string($koneksi, $_POST['alamat']);
-        $no_telp = mysqli_real_escape_string($koneksi, $_POST['no_telp']);
+// Ambil aksi dari URL
+$aksi = isset($_GET['aksi']) ? $_GET['aksi'] : '';
 
-        // Prepare the SQL query
-        $query = "UPDATE anggota SET nama='$nama', jenis_kelamin='$jenis_kelamin', alamat='$alamat', no_telp='$no_telp' WHERE id='$id'";
+if ($aksi == 'hapus') {
+    if (isset($_GET['id'])) {
+        $id = intval($_GET['id']); // Sanitize ID input
+        echo "ID yang diterima: " . $id; // Debugging ID
 
-        // Execute the query
-        if (mysqli_query($koneksi, $query)) {
-            // Redirect on success
-            header("Location: index.php");
+        // Periksa jika ID ada di database
+        $checkQuery = "SELECT * FROM anggota WHERE id = $id";
+        $checkResult = mysqli_query($koneksi, $checkQuery);
+        if (mysqli_num_rows($checkResult) == 0) {
+            echo "ID tidak ditemukan di database.";
+            exit();
+        }
+
+        // Menyiapkan pernyataan untuk menghapus data
+        $stmt = mysqli_prepare($koneksi, "DELETE FROM anggota WHERE id = ?");
+        mysqli_stmt_bind_param($stmt, "i", $id); // Mengikat parameter ID sebagai integer
+
+        // Menjalankan pernyataan
+        if (mysqli_stmt_execute($stmt)) {
+            header("Location: index.php"); // Redirect setelah penghapusan berhasil
             exit();
         } else {
-            // Show error if the query fails
-            echo "Gagal mengupdate data: " . mysqli_error($koneksi);
+            // Menampilkan pesan jika gagal menghapus data
+            echo "Gagal menghapus data: " . mysqli_error($koneksi);
         }
+
+        // Menutup pernyataan
+        mysqli_stmt_close($stmt);
     } else {
         echo "ID tidak valid.";
     }
+} else {
+    header("Location: index.php"); 
 }
 
-// Close the database connection
-mysqli_close($koneksi);
+mysqli_close($koneksi); 
 ?>
