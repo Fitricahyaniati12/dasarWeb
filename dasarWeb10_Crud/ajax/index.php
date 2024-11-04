@@ -5,7 +5,8 @@ include 'auth.php';
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- CSRF Token -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+    <!-- CSRF Token -->
     <meta name="csrf-token" content="<?= $_SESSION['csrf_token'] ?>">
     <!-- Bootstrap -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.css" rel="stylesheet">
@@ -30,6 +31,7 @@ include 'auth.php';
                     <label>Nama</label>
                     <input type="hidden" name="id" id="id">
                     <input type="text" name="name" id="nama" class="form-control" required="true">
+                    <p class="text-danger" id="err_nama"></p> <!-- Pesan kesalahan untuk Nama -->
                 </div>
             </div>
             <div class="col-sm-3">
@@ -37,16 +39,19 @@ include 'auth.php';
                     <label>Jenis Kelamin</label><br>
                     <input type="radio" name="jenis_kelamin" id="jenkel1" value="L" required="true"> Laki-laki 
                     <input type="radio" name="jenis_kelamin" id="jenkel2" value="P"> Perempuan
+                    <p class="text-danger" id="err_jenis_kelamin"></p> <!-- Pesan kesalahan untuk Jenis Kelamin -->
                 </div>
             </div>
         </div>
         <div class="form-group">
             <label>Alamat</label>
             <textarea name="alamat" id="alamat" class="form-control" required="true"></textarea>
+            <p class="text-danger" id="err_alamat"></p> <!-- Pesan kesalahan untuk Alamat -->
         </div>
         <div class="form-group">
             <label>No Telepon</label>
             <input type="number" name="no_telp" id="no_telp" class="form-control" required="true">
+            <p class="text-danger" id="err_no_telp"></p> <!-- Pesan kesalahan untuk No Telepon -->
         </div>
         <div class="form-group">
             <button type="button" name="simpan" id="simpan" class="btn btn-primary">
@@ -69,14 +74,61 @@ include 'auth.php';
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
 <script type="text/javascript">
-$(document).ready(function(){
-   
+$(document).ready(function() {
     $.ajaxSetup({
         headers: {
-            'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content') // Perbaikan: Menggunakan nama yang benar untuk CSRF token
+            'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content') // Menyisipkan CSRF token ke dalam header
         }
     });
+
+    // Load data anggota ke dalam div
     $('.data').load("data.php"); 
+
+    // Event handler untuk tombol simpan
+    $("#simpan").click(function() {
+        var data = $('.form-data').serialize(); // Mengambil data dari form
+        var nama = document.getElementById("nama").value;
+        var alamat = document.getElementById("alamat").value;
+        var no_telp = document.getElementById("no_telp").value;
+
+        // Reset error messages
+        document.getElementById("err_nama").innerHTML = "";
+        document.getElementById("err_alamat").innerHTML = "";
+        document.getElementById("err_jenis_kelamin").innerHTML = "";
+        document.getElementById("err_no_telp").innerHTML = "";
+
+        // Validasi input
+        if (nama == "") {
+            document.getElementById("err_nama").innerHTML = "Nama Harus Diisi";
+            return; 
+        }
+        if (alamat == "") {
+            document.getElementById("err_alamat").innerHTML = "Alamat Harus Diisi";
+            return;
+        }
+        if (!document.getElementById("jenkel1").checked && !document.getElementById("jenkel2").checked) {
+            document.getElementById("err_jenis_kelamin").innerHTML = "Jenis Kelamin Harus Dipilih";
+            return;
+        }
+        if (no_telp == "") {
+            document.getElementById("err_no_telp").innerHTML = "No Telepon Harus Diisi";
+            return;
+        }
+
+        $.ajax({
+            type: 'POST',
+            url: "form_action.php",
+            data: data,
+            success: function() {
+                $('.data').load("data.php"); 
+                document.getElementById("id").value = ""; 
+                document.getElementById("form-data").reset(); 
+            },
+            error: function(response) {
+                console.log(response.responseText); 
+            }
+        });
+    });
 });
 </script>
 </body>
