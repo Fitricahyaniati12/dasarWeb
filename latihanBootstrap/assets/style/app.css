@@ -1,0 +1,23 @@
+body {
+    background : linear-gradient(#9a08dd 0%, #dd4c4f 40%,#7420d3 100%);
+}
+.profile{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 100px;
+}
+.Fotoku{
+    width: 100px;
+}
+.profile h2{
+    color: white;
+}
+
+.profile h4{
+    color: white;
+}
+.biodata {
+    background-color: #fff;
+}
