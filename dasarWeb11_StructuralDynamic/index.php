@@ -17,6 +17,7 @@ if (!empty($_SESSION['level'])) {
 
     
     include 'admin/Teamplate/footer.php'; 
+
 } else {
     header("Location: login.php");
     exit(); 
