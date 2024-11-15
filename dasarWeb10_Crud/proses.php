@@ -1,7 +1,7 @@
 <?php
 include('koneksi.php'); // Pastikan file koneksi database sudah benar
 
-if (isset($_GET['aksi'])) {
+/*if (isset($_GET['aksi'])) {
     $aksi = $_GET['aksi'];
 
     if ($aksi == 'tambah') {
@@ -39,5 +39,33 @@ if (isset($_GET['aksi'])) {
 }
 
 // Menutup koneksi database
-mysqli_close($koneksi);
+mysqli_close($koneksi);*/
+
+if (isset($_GET['aksi']) && $_GET['aksi'] === 'ubah') {
+    // Ambil data dari form
+    $id = mysqli_real_escape_string($koneksi, $_POST['id']);
+    $nama = mysqli_real_escape_string($koneksi, $_POST['nama']);
+    $jenis_kelamin = mysqli_real_escape_string($koneksi, $_POST['jenis_kelamin']);
+    $alamat = mysqli_real_escape_string($koneksi, $_POST['alamat']);
+    $no_telp = mysqli_real_escape_string($koneksi, $_POST['no_telp']);
+
+    // Query update data
+    $query = "UPDATE anggota 
+              SET nama = '$nama', 
+                  jenis_kelamin = '$jenis_kelamin', 
+                  alamat = '$alamat', 
+                  no_telp = '$no_telp' 
+              WHERE id = '$id'";
+
+    if (mysqli_query($koneksi, $query)) {
+        // Redirect ke halaman index atau berikan pesan sukses
+        header('Location: index.php?pesan=berhasil');
+        exit;
+    } else {
+        // Pesan error jika update gagal
+        echo "Error: " . mysqli_error($koneksi);
+    }
+} else {
+    echo "Aksi tidak valid!";
+}
 ?>

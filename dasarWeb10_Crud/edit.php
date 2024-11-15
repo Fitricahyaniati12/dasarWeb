@@ -8,35 +8,34 @@
 <?php
 include('koneksi.php');
 
-// Mengambil ID anggota dari query string
-$id = $_GET['id'];
-
 // Memastikan ID ada dan valid
-if (isset($id) && is_numeric($id)) {
-    $query = "SELECT * FROM anggota WHERE id = $id";
+if (isset($_GET['id']) && is_numeric($_GET['id'])) {
+    $id = mysqli_real_escape_string($koneksi, $_GET['id']); // Mencegah SQL Injection
+
+    // Query untuk mendapatkan data anggota berdasarkan ID
+    $query = "SELECT * FROM anggota WHERE id = '$id'";
     $result = mysqli_query($koneksi, $query);
-    
-    // Cek apakah ada data yang ditemukan
-    if (mysqli_num_rows($result) > 0) {
+
+    // Cek apakah data ditemukan
+    if ($result && mysqli_num_rows($result) > 0) {
         $row = mysqli_fetch_assoc($result);
     } else {
-        echo "Data tidak ditemukan!";
-        exit; // Hentikan eksekusi jika data tidak ada
+        echo "<div class='alert alert-danger'>Data tidak ditemukan!</div>";
+        exit;
     }
 } else {
-    echo "ID tidak valid!";
-    exit; // Hentikan eksekusi jika ID tidak valid
+    echo "<div class='alert alert-danger'>ID tidak valid!</div>";
+    exit;
 }
 
-// Menutup koneksi database
-mysqli_close($koneksi);
+// Tidak menutup koneksi di sini karena dibutuhkan oleh form
 ?>
 <div class="container mt-4">
     <h2>Edit Data Anggota</h2>
     <form action="proses.php?aksi=ubah" method="post">
         <input type="hidden" name="id" value="<?php echo htmlspecialchars($row['id']); ?>">
         <div class="form-group">
-            <label for="nama">Nama: </label>
+            <label for="nama">Nama:</label>
             <input type="text" class="form-control" name="nama" id="nama" value="<?php echo htmlspecialchars($row['nama']); ?>" required>
         </div>
         <div class="form-group">
@@ -65,5 +64,9 @@ mysqli_close($koneksi);
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<?php
+// Menutup koneksi database setelah form selesai
+mysqli_close($koneksi);
+?>
 </body>
 </html>
