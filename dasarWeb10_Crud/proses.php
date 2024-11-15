@@ -1,7 +1,7 @@
 <?php
-include('koneksi.php'); // Pastikan file koneksi database sudah benar
+include('koneksi.php'); 
 
-/*if (isset($_GET['aksi'])) {
+if (isset($_GET['aksi'])) {
     $aksi = $_GET['aksi'];
 
     if ($aksi == 'tambah') {
@@ -16,13 +16,13 @@ include('koneksi.php'); // Pastikan file koneksi database sudah benar
         $result = mysqli_query($koneksi, $query);
 
         if ($result) {
-            header('Location: index.php'); // Redirect ke halaman utama setelah berhasil
+            header('Location: index.php'); 
             exit;
         } else {
             echo 'Gagal menambahkan data: ' . mysqli_error($koneksi);
         }
     } elseif ($aksi == 'ubah') {
-        // Proses ubah data anggota (sudah ada di kode Anda)
+        // Proses ubah data anggota 
     } elseif ($aksi == 'hapus') {
         // Proses hapus data anggota
         $id = $_GET['id'];
@@ -39,7 +39,7 @@ include('koneksi.php'); // Pastikan file koneksi database sudah benar
 }
 
 // Menutup koneksi database
-mysqli_close($koneksi);*/
+//mysqli_close($koneksi);
 
 if (isset($_GET['aksi']) && $_GET['aksi'] === 'ubah') {
     // Ambil data dari form
@@ -49,7 +49,6 @@ if (isset($_GET['aksi']) && $_GET['aksi'] === 'ubah') {
     $alamat = mysqli_real_escape_string($koneksi, $_POST['alamat']);
     $no_telp = mysqli_real_escape_string($koneksi, $_POST['no_telp']);
 
-    // Query update data
     $query = "UPDATE anggota 
               SET nama = '$nama', 
                   jenis_kelamin = '$jenis_kelamin', 
@@ -58,11 +57,10 @@ if (isset($_GET['aksi']) && $_GET['aksi'] === 'ubah') {
               WHERE id = '$id'";
 
     if (mysqli_query($koneksi, $query)) {
-        // Redirect ke halaman index atau berikan pesan sukses
+
         header('Location: index.php?pesan=berhasil');
         exit;
     } else {
-        // Pesan error jika update gagal
         echo "Error: " . mysqli_error($koneksi);
     }
 } else {
