@@ -4,8 +4,8 @@ body {
 }
 
 .container {
-    max-width: 800px; /* Atur lebar maksimal untuk container */
-    margin: 0 auto;   /* Pusatkan container */
+    max-width: 800px; 
+    margin: 0 auto;   
 }
 
 h2 {
