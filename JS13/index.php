@@ -12,10 +12,14 @@ if($session->get('is_login') !== true){ header('Location: login.php');
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>AdminLTE 3 | Blank Page</title>
 
-  <!-- Google Font: Source Sans Pro -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+   <!-- Google Font: Source Sans Pro -->
+   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
   <!-- Font Awesome -->
   <link rel="stylesheet" href="adminlte/plugins/fontawesome-free/css/all.min.css">
+  <!-- DataTables -->
+  <link rel="stylesheet" href="adminlte/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+  <link rel="stylesheet" href="adminlte/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+  <link rel="stylesheet" href="adminlte/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="adminlte/dist/css/adminlte.min.css">
 </head>
@@ -23,7 +27,7 @@ if($session->get('is_login') !== true){ header('Location: login.php');
 <!-- Site wrapper -->
 <div class="wrapper">
   <!-- Navbar -->
-  <?php include('layout/header.php');?>
+  <?php include('layouts/header.php');?>
   <!-- /.navbar -->
 
   <!-- Main Sidebar Container -->
@@ -35,7 +39,7 @@ if($session->get('is_login') !== true){ header('Location: login.php');
     </a>
 
     <!-- Sidebar -->
-    <?php include('layout/sidebar.php');?>
+    <?php include('layouts/sidebar.php');?>
     <!-- /.sidebar -->
   </aside>
 
@@ -56,7 +60,7 @@ if($session->get('is_login') !== true){ header('Location: login.php');
   </div>
   <!-- /.content-wrapper -->
 
-  <?php include('layout/footer.php');?>
+  <?php include('layouts/footer.php');?>
 
   <!-- Control Sidebar -->
   <aside class="control-sidebar control-sidebar-dark">
@@ -68,8 +72,22 @@ if($session->get('is_login') !== true){ header('Location: login.php');
 
 <!-- jQuery -->
 <script src="adminlte/plugins/jquery/jquery.min.js"></script>
+<!-- jQuery Validation -->
+<script src="adminlte/plugins/jquery-validation/jquery.validate.min.js"></script>
+<script src="adminlte/plugins/jquery-validation/additional-methods.min.js"></script>
 <!-- Bootstrap 4 -->
 <script src="adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- DataTables & Plugins -->
+<script src="adminlte/plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="adminlte/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+<script src="adminlte/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+<script src="adminlte/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+<script src="adminlte/plugins/jszip/jszip.min.js"></script>
+<script src="adminlte/plugins/pdfmake/pdfmake.min.js"></script>
+<script src="adminlte/plugins/pdfmake/vfs_fonts.js"></script>
+<script src="adminlte/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+<script src="adminlte/plugins/datatables-buttons/js/buttons.print.min.js"></script>
+<script src="adminlte/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
 <!-- AdminLTE App -->
 <script src="adminlte/dist/js/adminlte.min.js"></script>
 <!-- AdminLTE for demo purposes -->

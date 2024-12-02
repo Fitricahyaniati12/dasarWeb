@@ -17,6 +17,10 @@ class Session {
     public function exists($key) {
         return isset($_SESSION[$key]);
     }
+    public function destroy() {
+        session_destroy();
+    }
+
 
     public function delete($key) {
         if (isset($_SESSION[$key])) {
